@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Brian Borowski</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <style>
+      :root {
+        --bg-color: #000;
+        --darker-color: #0a0;
+        --header-color: #0f0;
+        --subheader-color: #9f9;
+      }
+
+      body {
+        background-color: var(--bg-color);
+        margin: 0;
+        padding: 0;
+        font-family: monospace;
+      }
+
+      .darker-color {
+        color: var(--darker-color);
+      }
+
+      .content {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        margin: 30px;
+      }
+
+      .portrait {
+        border-radius: 50%;
+        height: 200px;
+        width: 200px;
+      }
+
+      .header, .subheader {
+        font-weight: normal;
+        margin: 0;
+        padding: 0;
+      }
+
+      .header {
+        margin: 4px;
+        color: var(--header-color);
+      }
+
+      .subheader {
+        color: var(--subheader-color);
+        font-style: italic;
+      }
+
+      .svg-bg {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: -999;
+      }
+
+      .svg-thing {
+        fill: #0f0;
+        font-weight: normal;
+        text-anchor: middle;
+        text-shadow: 0 -8px 4px #0f0;
+      }
+
+      .container {
+        margin: 20px 10px 10px 0;
+        max-width: 400px;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 8px;
+      }
+
+      .container p {
+        color: #afa;
+        line-height: 1.4;
+      }
+
+      @media screen and (max-width: 800px) { .svg-thing { text-shadow: none; }}
+
+    </style>
+  </head>
+  <body>
+    <svg xmlns="http://www.w3.org/2000/svg" class="svg-bg">
+    </svg>
+    <div class="content">
+      <img class="portrait" src="https://stbonspaterson.org/pictures/2015/5/20150531_104311.jpg">
+      <h1 class="header"><span class="darker-color">Brian</span> Borowski</h1>
+      <h3 class="subheader">The Man. The Myth. The Legend.</h3>
+      <div class="container">
+        <h2 class="header"><span class="darker-color">Algorithmic</span> Savant</h1>
+        <p>
+            Doctor Brian Borowski, master code-bender and three time world champion in algorithmic prowess, does not simply <i>write</i> code. He breathes life into every line creating intricate constant time solutions to any problem &quot;NP complete&quot; or not.
+        </p>
+      </div>
+      <div class="container">
+        <h2 class="header"><span class="darker-color">Musical</span> Genius</h1>
+        <p>
+          When Brian sings, birds from around the world sing with him. When Brian plays the organ, time dilates and world peace is acquired for the duration of his play. The skill Brian possesses is active sought out by billionaires for private commission.
+        </p>
+      </div>
+      <div class="container">
+        <h2 class="header"><span class="darker-color">Teaching</span> Extraordinaire</h1>
+        <p>
+          Loved by all, Professor Brian Borowski is the epitome of modern teaching. No other university on the planet has come even light years close to the tier at which Dr. B bestows knowledge upon his disciples. 
+        </p>
+      </div>
+      <div class="container">
+        <h2 class="header"><span class="darker-color">Shoe</span> Stepper</h1>
+        <p>
+          One of the skills Borowski has honed over the years is 100% accurate shoe stepping martial arts. This tactic has been deployed in pursuit of disobedient students in accordance with the Shoe Stepping Clause.
+        </p>
+      </div>
+      <div class="container">
+        <h2 class="header"><span class="darker-color">Burger</span> Eater</h1>
+        <p>
+          Every Monday evening Dr. B emerges from his holy land and blesses us with his presence at a local burger restaurant. At this time, he shares wisdom that can only be acquired by the most fortuitous of students.
+        </p>
+      </div>
+      <div class="container">
+        <h2 class="header"><span class="darker-color">Compulsive</span> Complainer</h1>
+        <p>
+          There are so many things wrong with the world and our #1 voice of reason is none other than Dr. Brian Borowski. Dr. B's superior reasoning skills and resonating voice aid in expressing what others are too scared to admit.
+        </p>
+      </div>
+      <div class="container">
+        <h2 class="header"><span class="darker-color">Pizza</span> Lover</h1>
+        <p>
+          
+        </p>
+      </div>
+    </div>
+
+    <script>
+const $ = document.querySelector.bind(document);
+      // Applies props to svg object el
+function svgProps(el, props) {
+  for (prop in props)
+    el.setAttribute(prop, props[prop]);
+  return el;
+}
+
+// Creates an svg with tag `tag`, applies `props`, and gives it `children`
+function svg(tag, props, ...children) {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  svgProps(el, props);
+  children.map(el.appendChild.bind(el));
+  return el;
+}
+
+const NUM_THINGS = window.innerWidth < 800 ? 100 : 500;
+
+// create background elements
+let things = Array.from({length: NUM_THINGS}).map(i => {
+  const opacity = Math.random() * 0.6 + 0.4;
+  const rate = Math.random() * 0.3 + 0.3;
+  return {
+    svg: svg('text', {
+      class: 'svg-thing', 
+      opacity: opacity,
+      'font-size': 24 * rate / 0.6 + 'px',
+    }, document.createTextNode(Math.random() * 2 | 0)),
+    x: Math.random(),
+    rate,
+    y: Math.random(),
+  }
+});
+
+// add them to the svg
+things.forEach(({svg}) => $('.svg-bg').appendChild(svg));
+
+let time;
+let nextBigThing = 240 + Math.random() * 120;
+function render() {
+  if(!time)
+    time = performance.now();
+  const now = performance.now();
+  const delta = (now - time) / 1000;
+  time = now;
+  nextBigThing -= delta;
+
+  if(nextBigThing < 0) {
+    nextBigThing = 240 + Math.random() * 120;
+    let big;
+    things.push({
+      svg: big = svg('text', {
+        class: 'svg-thing', 
+        opacity: 1,
+        'font-size': '500px',
+        'font-weight': 'bold',
+      }, document.createTextNode(2)),
+      x: 0.5,
+      rate: 2,
+      big: true,
+      y: -0.2,
+    });
+    $('.svg-bg').appendChild(big);
+  }
+
+  things.forEach((t, i) => {
+    t.y += delta * t.rate * 0.5;
+    if(t.big && t.y > 2) {
+      things.splice(i, 1);
+    }
+    while(t.y > 1.1 && !t.big) {
+      t.y = -0.01 * Math.random();
+      t.x = Math.random();
+      // t.svg.innerText = Math.random() * 2 | 0;
+      const rate = t.rate = Math.random() * 0.3 + 0.3;
+      const opacity = Math.random() * 0.6 + 0.4;
+      svgProps(t.svg, {
+        opacity: opacity,
+        'font-size': 24 * rate / 0.6 + 'px',
+      });
+    }
+    if(Math.random() < 0.001 && !t.big) {
+      t.svg.innerHTML = Math.random() * (Math.random() + 1.3) | 0;
+    }
+    svgProps(t.svg, {transform: `translate(${t.x * window.innerWidth} ${t.y * window.innerHeight})`});
+  });
+
+
+  requestAnimationFrame(render);
+}
+document.addEventListener('DOMContentLoaded', () => {
+  requestAnimationFrame(render);
+});
+
+    </script>
+  </body>
+</html>
