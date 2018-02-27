@@ -140,14 +140,14 @@
     <script>
 const $ = document.querySelector.bind(document);
       // Applies props to svg object el
-function svgProps(el, props) {
+const svgProps = (el, props) => {
   for (prop in props)
     el.setAttribute(prop, props[prop]);
   return el;
 }
 
 // Creates an svg with tag `tag`, applies `props`, and gives it `children`
-function svg(tag, props, ...children) {
+const svg = (tag, props, ...children) => {
   const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
   svgProps(el, props);
   children.map(el.appendChild.bind(el));
@@ -177,7 +177,7 @@ things.forEach(({svg}) => $('.svg-bg').appendChild(svg));
 
 let time;
 let nextBigThing = 240 + Math.random() * 120;
-function render() {
+const render = () => {
   if(!time)
     time = performance.now();
   const now = performance.now();
